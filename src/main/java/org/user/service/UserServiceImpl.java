@@ -1,6 +1,6 @@
 package org.user.service;
 
-import org.user.daofactory.DAOFactory;
+import org.user.daofactory.DaoFactory;
 import org.user.daofactory.FactoryHelper;
 import org.user.daofactory.HibernateFactory;
 import org.user.daofactory.JDBCFactory;
@@ -16,7 +16,7 @@ public class UserServiceImpl implements UserService {
 
     private FactoryHelper configureApplication() {
         FactoryHelper dao;
-        DAOFactory factory;
+        DaoFactory factory;
         if (getDaoName().equalsIgnoreCase("Hibernate")) {
             factory = new HibernateFactory();
         } else {

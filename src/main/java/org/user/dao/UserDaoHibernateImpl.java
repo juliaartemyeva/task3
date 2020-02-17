@@ -8,14 +8,14 @@ import org.user.util.*;
 
 import java.util.List;
 
-public class UserDAOHibernate implements UserDAO {
-    private static UserDAOHibernate daoHibernate = new UserDAOHibernate();
+public class UserDaoHibernateImpl implements UserDao {
+    private static UserDaoHibernateImpl daoHibernate = new UserDaoHibernateImpl();
     private SessionFactory sessionFactory = DBHelper.getDbHelper().getSessionFactory();
 
-    private UserDAOHibernate() {
+    private UserDaoHibernateImpl() {
     }
 
-    public static UserDAOHibernate getInstance() {
+    public static UserDaoHibernateImpl getInstance() {
         return daoHibernate;
     }
 

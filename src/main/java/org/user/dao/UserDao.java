@@ -4,7 +4,7 @@ import org.user.model.User;
 
 import java.util.List;
 
-public interface UserDAO {
+public interface UserDao {
 
     void insertUser(User user);
 

@@ -7,14 +7,14 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDAOJDBC implements UserDAO {
+public class UserDaoJDBCimpl implements UserDao {
     private Connection connection = DBHelper.getDbHelper().getConnection();
-    private static UserDAOJDBC daoJDBC = new UserDAOJDBC();
+    private static UserDaoJDBCimpl daoJDBC = new UserDaoJDBCimpl();
 
-    private UserDAOJDBC() {
+    private UserDaoJDBCimpl() {
     }
 
-    public static UserDAOJDBC getInstance() {
+    public static UserDaoJDBCimpl getInstance() {
         return daoJDBC;
     }
 

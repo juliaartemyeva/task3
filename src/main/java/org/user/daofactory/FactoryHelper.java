@@ -1,15 +1,15 @@
 package org.user.daofactory;
 
-import org.user.dao.UserDAO;
+import org.user.dao.UserDao;
 import org.user.model.User;
 import org.user.service.UserService;
 
 import java.util.List;
 
 public class FactoryHelper implements UserService {
-    private UserDAO userDAO;
+    private UserDao userDAO;
 
-    public FactoryHelper(DAOFactory daoFactory) {
+    public FactoryHelper(DaoFactory daoFactory) {
         userDAO = daoFactory.createDAO();
     }
 

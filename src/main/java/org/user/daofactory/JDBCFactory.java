@@ -1,11 +1,11 @@
 package org.user.daofactory;
 
-import org.user.dao.UserDAO;
-import org.user.dao.UserDAOJDBC;
+import org.user.dao.UserDao;
+import org.user.dao.UserDaoJDBCimpl;
 
-public class JDBCFactory implements DAOFactory {
+public class JDBCFactory implements DaoFactory {
     @Override
-    public UserDAO createDAO() {
-        return UserDAOJDBC.getInstance();
+    public UserDao createDAO() {
+        return UserDaoJDBCimpl.getInstance();
     }
 }
