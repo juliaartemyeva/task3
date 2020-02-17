@@ -1,7 +1,7 @@
 package org.user.service;
 
+import org.user.dao.UserDao;
 import org.user.daofactory.DaoFactory;
-import org.user.daofactory.FactoryHelper;
 import org.user.daofactory.HibernateFactory;
 import org.user.daofactory.JDBCFactory;
 import org.user.model.User;
@@ -12,18 +12,19 @@ import java.util.Properties;
 
 public class UserServiceImpl implements UserService {
     private static UserServiceImpl userService = new UserServiceImpl();
-    FactoryHelper dao = configureApplication();
+    private UserDao dao = configureDaoFactory().createDAO();
 
-    private FactoryHelper configureApplication() {
-        FactoryHelper dao;
+    private UserServiceImpl() {
+    }
+
+    private DaoFactory configureDaoFactory() {
         DaoFactory factory;
         if (getDaoName().equalsIgnoreCase("Hibernate")) {
             factory = new HibernateFactory();
         } else {
             factory = new JDBCFactory();
         }
-        dao = new FactoryHelper(factory);
-        return dao;
+        return factory;
     }
 
     private String getDaoName() {
@@ -34,9 +35,6 @@ public class UserServiceImpl implements UserService {
             e.printStackTrace();
         }
         return properties.getProperty("dao");
-    }
-
-    private UserServiceImpl() {
     }
 
     public static UserServiceImpl getInstance() {
