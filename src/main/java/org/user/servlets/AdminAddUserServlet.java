@@ -13,7 +13,6 @@ public class AdminAddUserServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        RequestDispatcher dispatcher = req.getRequestDispatcher("admin-form.jsp");
-        dispatcher.forward(req, resp);
+        req.getRequestDispatcher("/admin-form.jsp").forward(req, resp);
     }
 }

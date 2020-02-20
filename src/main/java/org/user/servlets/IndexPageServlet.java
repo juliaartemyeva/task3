@@ -1,6 +1,5 @@
 package org.user.servlets;
 
-import org.user.model.User;
 import org.user.service.UserService;
 import org.user.service.UserServiceImpl;
 
@@ -12,13 +11,26 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+import static java.util.Objects.nonNull;
+
 @WebServlet("/")
 public class IndexPageServlet extends HttpServlet {
     private UserService userService = UserServiceImpl.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        getServletContext().getRequestDispatcher("/index-page.jsp").forward(req, resp);
+        HttpSession session = req.getSession();
+        if (nonNull(session) && nonNull(session.getAttribute("role"))) {
+            String role = (String) session.getAttribute("role");
+            moveToMenu(req, resp, role);
+            if (role.equals("admin")) {
+                req.getRequestDispatcher("/admin-page.jsp");
+            } else {
+                req.getRequestDispatcher("/user-page.jsp");
+            }
+        } else {
+            getServletContext().getRequestDispatcher("/index-page.jsp").forward(req, resp);
+        }
     }
 
     @Override
@@ -27,15 +39,28 @@ public class IndexPageServlet extends HttpServlet {
         String password = req.getParameter("password");
         HttpSession session = req.getSession();
         if (userService.userIsExist(login, password)) {
-            String role = (String) session.getAttribute("role");
+            session.setAttribute("login", login);
+            String role = userService.getRoleByLoginPassword(login, password);
             if (role.equals("admin")) {
-                req.getRequestDispatcher("/admin-page.jsp").forward(req, resp);
+                session.setAttribute("role", "admin");
+                resp.sendRedirect("/admin");
             } else if (role.equals("user")) {
-                req.getRequestDispatcher("/user-page.jsp").forward(req, resp);
+                session.setAttribute("role", "user");
+                resp.sendRedirect("/user");
             }
         } else {
-            req.setAttribute("status", "There are no such User in system! Please try again!");
             req.getRequestDispatcher("/index-page.jsp").forward(req, resp);
+        }
+    }
+
+    private void moveToMenu(final HttpServletRequest req,
+                            final HttpServletResponse res,
+                            final String role)
+            throws ServletException, IOException {
+        if (role.equals("admin")) {
+            res.sendRedirect("/admin");
+        } else if (role.equals("user")) {
+            res.sendRedirect("/user");
         }
     }
 }

@@ -21,7 +21,7 @@ public class AdminEditUserServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int id = Integer.parseInt(req.getParameter("id"));
         User existingUser = userService.selectUser(id);
-        RequestDispatcher dispatcher = req.getRequestDispatcher("admin-form.jsp");
+        RequestDispatcher dispatcher = req.getRequestDispatcher("/admin-form.jsp");
         req.setAttribute("user", existingUser);
         dispatcher.forward(req, resp);
     }

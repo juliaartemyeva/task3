@@ -51,7 +51,7 @@
                     <td><c:out value="${user.country}"/></td>
                     <td><c:out value="${user.role}"/></td>
 
-                    <td><a href="${pageContext.request.contextPath}admin/edit?id=<c:out value='${user.id}' />">Edit</a>
+                    <td><a href="/admin/edit?id=<c:out value='${user.id}' />">Edit</a>
                         &nbsp;&nbsp;&nbsp;&nbsp; <a href="${pageContext.request.contextPath}admin/delete?id=<c:out value='${user.id}' />">Delete</a></td>
                 </tr>
             </c:forEach>

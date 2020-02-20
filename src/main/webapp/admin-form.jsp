@@ -27,10 +27,10 @@
     <div class="card">
         <div class="card-body">
             <c:if test="${user != null}">
-            <form action="${pageContext.request.contextPath}admin/update" method="post">
+            <form action="/admin/update" method="post">
                 </c:if>
                 <c:if test="${user == null}">
-                <form action="${pageContext.request.contextPath}admin/insert" method="post">
+                <form action="/admin/insert" method="post">
                     </c:if>
                     <caption>
                         <h2>

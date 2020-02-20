@@ -20,7 +20,7 @@
 
 </header>
 
-<h3 class="text-left">Hello ${sessionScope.login}!</h3>
+<h3 class="text-left">Hello user ${sessionScope.login}!</h3>
 
 </body>
 </html>

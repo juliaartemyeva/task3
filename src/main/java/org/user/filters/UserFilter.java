@@ -5,8 +5,10 @@ import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+import static java.util.Objects.nonNull;
 
 @WebFilter("/user")
 public class UserFilter implements Filter {
@@ -20,7 +22,11 @@ public class UserFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse resp = (HttpServletResponse) response;
         String role = (String) req.getSession().getAttribute("role");
-        if ("user".equals(role) | "admin".equals(role)) {
+        HttpSession session = req.getSession();
+        if (nonNull(session) && (role.equals("admin") || role.equals("user"))) {
+            req.getRequestDispatcher("/user-page.jsp");
+            chain.doFilter(req, resp);
+        } else if ("user".equals(role) | "admin".equals(role)) {
             chain.doFilter(req, resp);
         } else {
             req.getSession().removeAttribute("login");
