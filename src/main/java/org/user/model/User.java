@@ -9,53 +9,79 @@ public class User {
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(name = "name")
-    private String name;
-    @Column(name = "email")
-    private String email;
+    @Column(name = "login")
+    private String login;
+    @Column(name = "password")
+    private String password;
     @Column(name = "country")
     private String country;
+    @Column(name = "role")
+    private String role;
 
     public User() {
     }
 
-    public User(String name, String email, String country) {
+    public User(String login, String password, String country, String role) {
         super();
-        this.name = name;
-        this.email = email;
+        this.login = login;
+        this.password = password;
+        this.country = country;
+        this.role = role;
+    }
+    public User(int id, String login, String password, String country) {
+        super();
+        this.id = id;
+        this.login = login;
+        this.password = password;
         this.country = country;
     }
 
-    public User(int id, String name, String email, String country) {
+    public User(int id, String login, String password, String country, String role) {
         super();
         this.id = id;
-        this.name = name;
-        this.email = email;
+        this.login = login;
+        this.password = password;
         this.country = country;
+        this.role = role;
     }
 
     public int getId() {
         return id;
     }
+
     public void setId(int id) {
         this.id = id;
     }
-    public String getName() {
-        return name;
+
+    public String getLogin() {
+        return login;
     }
-    public void setName(String name) {
-        this.name = name;
+
+    public void setLogin(String name) {
+        this.login = name;
     }
-    public String getEmail() {
-        return email;
+
+    public String getPassword() {
+        return password;
     }
-    public void setEmail(String email) {
-        this.email = email;
+
+    public void setPassword(String email) {
+        this.password = email;
     }
+
     public String getCountry() {
         return country;
     }
+
     public void setCountry(String country) {
         this.country = country;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }

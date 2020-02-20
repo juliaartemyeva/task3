@@ -15,4 +15,10 @@ public interface UserService {
     void deleteUser(int id);
 
     void updateUser(User user);
+
+    boolean userIsExist(String login, String password);
+
+    String getRoleByLoginPassword(String login, String password);
+
+    User getUserByLoginAndPassword(String login, String password);
 }

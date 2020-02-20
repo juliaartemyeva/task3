@@ -15,12 +15,10 @@
     <nav class="navbar navbar-expand-md navbar-dark"
          style="background-color: #b3159b">
         <div>
-            <a href="http://localhost:8080/" class="navbar-brand"> User Management App </a>
+            <a href="http://localhost:8080/admin" class="navbar-brand"> Welcome To Admin Page </a>
         </div>
-
         <ul class="navbar-nav">
-            <li><a href="<%=request.getContextPath()%>/list"
-                   class="nav-link">List of Users</a></li>
+            <li><a href="<c:url value='/logout' />" class="nav-link">Logout My Account</a></li>
         </ul>
     </nav>
 </header>
@@ -29,12 +27,11 @@
     <div class="card">
         <div class="card-body">
             <c:if test="${user != null}">
-            <form action="update" method="post">
+            <form action="${pageContext.request.contextPath}admin/update" method="post">
                 </c:if>
                 <c:if test="${user == null}">
-                <form action="insert" method="post">
+                <form action="${pageContext.request.contextPath}admin/insert" method="post">
                     </c:if>
-
                     <caption>
                         <h2>
                             <c:if test="${user != null}">
@@ -45,21 +42,20 @@
                             </c:if>
                         </h2>
                     </caption>
-
                     <c:if test="${user != null}">
                         <input type="hidden" name="id" value="<c:out value='${user.id}' />" />
                     </c:if>
 
                     <fieldset class="form-group">
-                        <label>User Name</label> <input type="text"
-                                                        value="<c:out value='${user.name}' />" class="form-control"
-                                                        name="name" required="required">
+                        <label>User Login</label> <input type="text"
+                                                        value="<c:out value='${user.login}' />" class="form-control"
+                                                        name="login" required="required">
                     </fieldset>
 
                     <fieldset class="form-group">
-                        <label>User Email</label> <input type="text"
-                                                         value="<c:out value='${user.email}' />" class="form-control"
-                                                         name="email">
+                        <label>User Password</label> <input type="text"
+                                                         value="<c:out value='${user.password}' />" class="form-control"
+                                                         name="password" required="required">
                     </fieldset>
 
                     <fieldset class="form-group">
@@ -67,8 +63,13 @@
                                                            value="<c:out value='${user.country}' />" class="form-control"
                                                            name="country">
                     </fieldset>
+                        <fieldset class="form-group">
+                            <label>User Role</label> <input type="text"
+                                                               value="<c:out value='${user.role}' />" class="form-control"
+                                                               name="role" required="required">
+                        </fieldset>
+                        <button type="submit" class="btn btn-success">Save</button>
 
-                    <button type="submit" class="btn btn-success">Save</button>
                 </form>
         </div>
     </div>

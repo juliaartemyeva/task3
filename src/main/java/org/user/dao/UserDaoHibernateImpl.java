@@ -1,12 +1,16 @@
 package org.user.dao;
 
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Restrictions;
 import org.user.model.User;
 import org.user.util.*;
 
 import java.util.List;
+
+import static java.util.Objects.nonNull;
 
 public class UserDaoHibernateImpl implements UserDao {
     private static UserDaoHibernateImpl daoHibernate = new UserDaoHibernateImpl();
@@ -23,10 +27,11 @@ public class UserDaoHibernateImpl implements UserDao {
     public void insertUser(User user) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-        session.save(new User(user.getName(), user.getEmail(), user.getCountry()));
+        session.save(new User(user.getLogin(), user.getPassword(), user.getCountry(), user.getRole()));
         transaction.commit();
         session.close();
     }
+
 
     @Override
     public User selectUser(int id) {
@@ -64,5 +69,32 @@ public class UserDaoHibernateImpl implements UserDao {
         session.update(user);
         transaction.commit();
         session.close();
+    }
+
+        @Override
+        public boolean userIsExist(String login, String password) {
+            Session session = sessionFactory.openSession();
+            List <User> user = session.createQuery("from User where login = '"+login+"' and password = '"+password+"'", User.class).list();
+        session.close();
+        return user.size() == 1;
+
+    }
+
+    @Override
+    public String getRoleByLoginPassword(String login, String password) {
+        Session session = sessionFactory.openSession();
+        List <User> user = session.createQuery("from User where login = '"+login+"' " +
+                "and password = '"+password+"'", User.class).list();
+        session.close();
+        return user.get(0).getRole();
+    }
+
+    @Override
+    public User getUserByLoginAndPassword(String login, String password) {
+        Session session = sessionFactory.openSession();
+        List <User> user = session.createQuery("from User where login = '"+login+"' " +
+                "and password = '"+password+"'", User.class).list();
+        session.close();
+        return user.get(0);
     }
 }

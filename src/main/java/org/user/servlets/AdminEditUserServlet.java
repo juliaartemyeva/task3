@@ -13,15 +13,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/edit")
-public class EditUserServlet extends HttpServlet {
+@WebServlet("/admin/edit")
+public class AdminEditUserServlet extends HttpServlet {
     private UserService userService = UserServiceImpl.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int id = Integer.parseInt(req.getParameter("id"));
         User existingUser = userService.selectUser(id);
-        RequestDispatcher dispatcher = req.getRequestDispatcher("user-form.jsp");
+        RequestDispatcher dispatcher = req.getRequestDispatcher("admin-form.jsp");
         req.setAttribute("user", existingUser);
         dispatcher.forward(req, resp);
     }

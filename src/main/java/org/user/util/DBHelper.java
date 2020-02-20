@@ -57,7 +57,7 @@ public class DBHelper {
         configuration.setProperty("hibernate.connection.password", PASSWORD);
         configuration.setProperty("hibernate.connection.serverTimezone", SERVERTIMEZONE);
         configuration.setProperty("hibernate.show_sql", "true");
-        configuration.setProperty("hibernate.hbm2ddl.auto", "create");
+        configuration.setProperty("hibernate.hbm2ddl.auto", "update");
         return configuration;
     }
 

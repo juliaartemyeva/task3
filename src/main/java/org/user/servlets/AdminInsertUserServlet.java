@@ -10,19 +10,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/insert")
-public class InsertUserServlet extends HttpServlet {
+@WebServlet("/admin/insert")
+public class AdminInsertUserServlet extends HttpServlet {
     private UserService userUserService = UserServiceImpl.getInstance();
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
-        String name = req.getParameter("name");
-        String email = req.getParameter("email");
+        String login = req.getParameter("login");
+        String password = req.getParameter("password");
         String country = req.getParameter("country");
-        User newUser = new User(name, email, country);
+        String role = req.getParameter("role");
+        User newUser = new User(login, password, country, role);
         userUserService.insertUser(newUser);
         try {
-            resp.sendRedirect("list");
+            resp.sendRedirect("/admin");
         } catch (IOException e) {
             e.printStackTrace();
         }

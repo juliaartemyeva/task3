@@ -8,12 +8,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/new")
-public class AddUserServlet extends HttpServlet {
+@WebServlet("/admin/new")
+public class AdminAddUserServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        RequestDispatcher dispatcher = req.getRequestDispatcher("user-form.jsp");
+        RequestDispatcher dispatcher = req.getRequestDispatcher("admin-form.jsp");
         dispatcher.forward(req, resp);
     }
 }

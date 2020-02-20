@@ -14,12 +14,11 @@
     <nav class="navbar navbar-expand-md navbar-dark"
          style="background-color: #b3159b">
         <div>
-            <a href="http://localhost:8080/" class="navbar-brand"> User
-                Management App </a>
+            <a href="http://localhost:8080/admin" class="navbar-brand"> Welcome To Admin Page </a>
         </div>
         <ul class="navbar-nav">
-            <li><a href="<%=request.getContextPath()%>/list"
-                   class="nav-link">List of Users</a></li>
+            <li><a href="<%=request.getContextPath()%>/logout"
+                   class="nav-link">Logout</a></li>
         </ul>
     </nav>
 </header>
@@ -30,16 +29,16 @@
         <hr>
         <div class="container text-left">
 
-            <a href="<%=request.getContextPath()%>/new" class="btn btn-success">add
-                new user</a>
+            <a href="<%=request.getContextPath()%>admin/new" class="btn btn-success">Add New User</a>
         </div>
         <br>
         <table class="table table-bordered">
             <thead>
             <tr>
-                <th>Name</th>
-                <th>Email</th>
+                <th>Login</th>
+                <th>Password</th>
                 <th>Country</th>
+                <th>Role</th>
                 <th>Actions</th>
             </tr>
             </thead>
@@ -47,12 +46,13 @@
             <c:forEach var="user" items="${listUser}">
 
                 <tr>
-                    <td><c:out value="${user.name}"/></td>
-                    <td><c:out value="${user.email}"/></td>
+                    <td><c:out value="${user.login}"/></td>
+                    <td><c:out value="${user.password}"/></td>
                     <td><c:out value="${user.country}"/></td>
-                    <td><a href="edit?id=<c:out value='${user.id}' />">Edit</a>
-                        &nbsp;&nbsp;&nbsp;&nbsp; <a
-                                href="delete?id=<c:out value='${user.id}' />">Delete</a></td>
+                    <td><c:out value="${user.role}"/></td>
+
+                    <td><a href="${pageContext.request.contextPath}admin/edit?id=<c:out value='${user.id}' />">Edit</a>
+                        &nbsp;&nbsp;&nbsp;&nbsp; <a href="${pageContext.request.contextPath}admin/delete?id=<c:out value='${user.id}' />">Delete</a></td>
                 </tr>
             </c:forEach>
             </tbody>

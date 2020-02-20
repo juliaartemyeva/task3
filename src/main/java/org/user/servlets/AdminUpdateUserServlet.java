@@ -11,19 +11,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/update")
-public class UpdateUserServlet extends HttpServlet {
+@WebServlet("/admin/update")
+public class AdminUpdateUserServlet extends HttpServlet {
     private UserService userService = UserServiceImpl.getInstance();
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int id = Integer.parseInt(req.getParameter("id"));
-        String name = req.getParameter("name");
-        String email = req.getParameter("email");
+        String login = req.getParameter("login");
+        String password = req.getParameter("password");
         String country = req.getParameter("country");
-        User user = new User(id, name, email, country);
+        String role = req.getParameter("role");
+        User user = new User(id, login, password, country, role);
         userService.updateUser(user);
-        resp.sendRedirect("list");
+        resp.sendRedirect("/admin");
     }
 }
 

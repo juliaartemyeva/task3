@@ -65,4 +65,19 @@ public class UserServiceImpl implements UserService {
     public void updateUser(User user) {
         dao.updateUser(user);
     }
+
+    @Override
+    public boolean userIsExist(String login, String password) {
+        return dao.userIsExist(login, password);
+    }
+
+    @Override
+    public String getRoleByLoginPassword(String login, String password) {
+        return dao.getRoleByLoginPassword(login, password);
+    }
+
+    @Override
+    public User getUserByLoginAndPassword(String login, String password) {
+        return dao.getUserByLoginAndPassword(login, password);
+    }
 }

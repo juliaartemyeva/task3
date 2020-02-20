@@ -10,14 +10,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/delete")
-public class DeleteUserServlet extends HttpServlet {
+@WebServlet("/admin/delete")
+public class AdminDeleteUserServlet extends HttpServlet {
     private UserService userService = UserServiceImpl.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int id = Integer.parseInt(req.getParameter("id"));
         userService.deleteUser(id);
-        resp.sendRedirect("list");
+        resp.sendRedirect("/admin");
     }
 }
