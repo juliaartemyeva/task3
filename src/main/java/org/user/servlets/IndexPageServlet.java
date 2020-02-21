@@ -33,21 +33,6 @@ public class IndexPageServlet extends HttpServlet {
         }
     }
 
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String login = req.getParameter("login");
-        String password = req.getParameter("password");
-        HttpSession session = req.getSession();
-        if (userService.userIsExist(login, password)) {
-            session.setAttribute("login", login);
-            String role = userService.getRoleByLoginPassword(login, password);
-            session.setAttribute("role", role);
-            resp.sendRedirect("/login");
-        } else {
-            req.getRequestDispatcher("/index-page.jsp").forward(req, resp);
-        }
-    }
-
     private void moveToMenu(final HttpServletRequest req,
                             final HttpServletResponse res,
                             final String role)

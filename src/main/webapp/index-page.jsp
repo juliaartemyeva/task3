@@ -24,7 +24,7 @@
     <div class="card">
         <div class="card-body">
 
-            <form action="/" method="post">
+            <form action="/login" method="post">
 
                     <caption>
                         <h2>
