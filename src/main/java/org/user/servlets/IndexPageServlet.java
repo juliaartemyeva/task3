@@ -1,5 +1,6 @@
 package org.user.servlets;
 
+import org.user.model.User;
 import org.user.service.UserService;
 import org.user.service.UserServiceImpl;
 
@@ -31,6 +32,18 @@ public class IndexPageServlet extends HttpServlet {
         } else {
             getServletContext().getRequestDispatcher("/index-page.jsp").forward(req, resp);
         }
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String login = req.getParameter("login");
+        String password = req.getParameter("password");
+        HttpSession session = req.getSession();
+        session.setAttribute("login", login);
+        session.setAttribute("password", password);
+        User user = userService.getUserByLoginAndPassword(login, password);
+        session.setAttribute("user",user);
+        resp.sendRedirect("/login");
     }
 
     private void moveToMenu(final HttpServletRequest req,
