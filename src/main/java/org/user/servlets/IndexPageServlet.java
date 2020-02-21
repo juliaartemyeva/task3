@@ -41,13 +41,8 @@ public class IndexPageServlet extends HttpServlet {
         if (userService.userIsExist(login, password)) {
             session.setAttribute("login", login);
             String role = userService.getRoleByLoginPassword(login, password);
-            if (role.equals("admin")) {
-                session.setAttribute("role", "admin");
-                resp.sendRedirect("/admin");
-            } else if (role.equals("user")) {
-                session.setAttribute("role", "user");
-                resp.sendRedirect("/user");
-            }
+            session.setAttribute("role", role);
+            resp.sendRedirect("/login");
         } else {
             req.getRequestDispatcher("/index-page.jsp").forward(req, resp);
         }

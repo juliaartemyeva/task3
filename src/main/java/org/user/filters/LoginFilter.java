@@ -10,8 +10,8 @@ import java.io.IOException;
 
 import static java.util.Objects.nonNull;
 
-@WebFilter("/user")
-public class UserFilter implements Filter {
+@WebFilter("/login")
+public class LoginFilter implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -22,12 +22,10 @@ public class UserFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse resp = (HttpServletResponse) response;
         String role = (String) req.getSession().getAttribute("role");
-        HttpSession session = req.getSession();
-        if (nonNull(session) && (role.equals("admin") || role.equals("user"))) {
-            req.getRequestDispatcher("/user-page.jsp");
-            chain.doFilter(req, resp);
-        } else if ("user".equals(role) | "admin".equals(role)) {
-            chain.doFilter(req, resp);
+        if ("user".equals(role))  {
+            resp.sendRedirect("/user");
+        } else if ("admin".equals(role)) {
+            resp.sendRedirect("/admin");
         } else {
             req.getSession().removeAttribute("login");
             req.getSession().removeAttribute("password");
