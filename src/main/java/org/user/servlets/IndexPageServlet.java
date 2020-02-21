@@ -39,11 +39,13 @@ public class IndexPageServlet extends HttpServlet {
         String login = req.getParameter("login");
         String password = req.getParameter("password");
         HttpSession session = req.getSession();
-        session.setAttribute("login", login);
-        session.setAttribute("password", password);
-        User user = userService.getUserByLoginAndPassword(login, password);
-        session.setAttribute("user",user);
-        resp.sendRedirect("/login");
+        if(userService.userIsExist(login, password)) {
+            User user = userService.getUserByLoginAndPassword(login, password);
+            session.setAttribute("user",user);
+            resp.sendRedirect("/login");
+        } else {
+            doGet(req,resp);
+        }
     }
 
     private void moveToMenu(final HttpServletRequest req,

@@ -30,10 +30,6 @@ public class LoginFilter implements Filter {
             resp.sendRedirect("/user");
         } else if ("admin".equals(role)) {
             resp.sendRedirect("/admin");
-        } else {
-            req.getSession().removeAttribute("user");
-            req.getSession().removeAttribute("role");
-            resp.sendRedirect("/");
         }
     }
 }
