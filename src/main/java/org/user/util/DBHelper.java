@@ -76,7 +76,7 @@ public class DBHelper {
             StringBuilder url = new StringBuilder();
             url.
                     append(URL_DBNAME).             //URL and db name
-                    append("user=").
+                    append("?user=").
                     append(USER).                   //login
                     append("&password=").
                     append(PASSWORD).               //password

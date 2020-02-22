@@ -1,7 +1,5 @@
 package org.user.filters;
 
-import org.user.model.User;
-
 import javax.servlet.*;
 
 import javax.servlet.annotation.WebFilter;
@@ -23,13 +21,16 @@ public class LoginFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse resp = (HttpServletResponse) response;
         HttpSession session = req.getSession();
-        User user = (User) session.getAttribute("user");
-        String role = user.getRole();
+        String role = (String) session.getAttribute("role");
         session.setAttribute("role", role);
         if ("user".equals(role)) {
             resp.sendRedirect("/user");
         } else if ("admin".equals(role)) {
             resp.sendRedirect("/admin");
+        } else {
+            session.removeAttribute("role");
+            session.removeAttribute("login");
+            resp.sendRedirect("/");
         }
     }
 }

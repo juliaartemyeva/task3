@@ -68,8 +68,7 @@
                                                                value="<c:out value='${user.role}' />" class="form-control"
                                                                name="role" required="required">
                         </fieldset>
-                        <button type="submit" class="btn btn-success">Save</button>
-
+                        <button type="submit" class="btn btn-success">Save </button>
                 </form>
         </div>
     </div>

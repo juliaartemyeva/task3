@@ -20,9 +20,12 @@ public class AdminInsertUserServlet extends HttpServlet {
         String password = req.getParameter("password");
         String country = req.getParameter("country");
         String role = req.getParameter("role");
-        User newUser = new User(login, password, country, role);
-        userUserService.insertUser(newUser);
-        resp.sendRedirect("/admin");
-
+        if (!userUserService.isLoginExists(login)) {
+            User newUser = new User(login, password, country, role);
+            userUserService.insertUser(newUser);
+            resp.sendRedirect("/admin");
+        } else {
+            resp.sendRedirect("/admin/new");
+        }
     }
 }

@@ -18,10 +18,10 @@ public class UserServiceImpl implements UserService {
     }
 
     private DaoFactory configureDaoFactory() {
-        DaoFactory factory;
+        DaoFactory factory = null;
         if (getDaoName().equalsIgnoreCase("Hibernate")) {
             factory = new HibernateFactory();
-        } else {
+        } else if (getDaoName().equalsIgnoreCase("JDBC")){
             factory = new JDBCFactory();
         }
         return factory;
@@ -79,5 +79,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserByLoginAndPassword(String login, String password) {
         return dao.getUserByLoginAndPassword(login, password);
+    }
+
+    @Override
+    public boolean isLoginExists(String login) {
+        return dao.isLoginExists(login);
     }
 }

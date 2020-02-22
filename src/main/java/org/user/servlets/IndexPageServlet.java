@@ -1,6 +1,5 @@
 package org.user.servlets;
 
-import org.user.model.User;
 import org.user.service.UserService;
 import org.user.service.UserServiceImpl;
 
@@ -39,12 +38,13 @@ public class IndexPageServlet extends HttpServlet {
         String login = req.getParameter("login");
         String password = req.getParameter("password");
         HttpSession session = req.getSession();
-        if(userService.userIsExist(login, password)) {
-            User user = userService.getUserByLoginAndPassword(login, password);
-            session.setAttribute("user",user);
+        session.setAttribute("login", login);
+        if (userService.userIsExist(login, password)) {
+            String role = userService.getRoleByLoginPassword(login, password);
+            session.setAttribute("role", role);
             resp.sendRedirect("/login");
         } else {
-            doGet(req,resp);
+            doGet(req, resp);
         }
     }
 

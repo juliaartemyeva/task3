@@ -21,20 +21,21 @@ public class UserDaoJDBCImpl implements UserDao {
     @Override
     public void insertUser(User user) {
         try (PreparedStatement statement = connection.prepareStatement("INSERT INTO user" +
-                "  (id, login, password, country) VALUES  (null, ?, ?, ?)")) {
+                "  (id, login, password, country, role) VALUES  (null, ?, ?, ?, ?)")) {
             statement.setString(1, user.getLogin());
             statement.setString(2, user.getPassword());
             statement.setString(3, user.getCountry());
+            statement.setString(4, user.getRole());
             statement.executeUpdate();
         } catch (SQLException e) {
-            printSQLException(e);
+            e.printStackTrace();
         }
     }
 
     @Override
     public User selectUser(int id) {
         User user = null;
-        try (PreparedStatement statement = connection.prepareStatement("select login,password,country" +
+        try (PreparedStatement statement = connection.prepareStatement("select login,password,country, role" +
                 " from user where id =?")) {
             statement.setInt(1, id);
             ResultSet rs = statement.executeQuery();
@@ -42,10 +43,11 @@ public class UserDaoJDBCImpl implements UserDao {
                 String login = rs.getString("login");
                 String password = rs.getString("password");
                 String country = rs.getString("country");
-                user = new User(id, login, password, country);
+                String role = rs.getString("role");
+                user = new User(id, login, password, country, role);
             }
         } catch (SQLException e) {
-            printSQLException(e);
+            e.printStackTrace();
         }
         return user;
     }
@@ -60,10 +62,11 @@ public class UserDaoJDBCImpl implements UserDao {
                 String login = rs.getString("login");
                 String password = rs.getString("password");
                 String country = rs.getString("country");
-                users.add(new User(id, login, password, country));
+                String role = rs.getString("role");
+                users.add(new User(id, login, password, country, role));
             }
         } catch (SQLException e) {
-            printSQLException(e);
+            e.printStackTrace();
         }
         return users;
     }
@@ -72,6 +75,7 @@ public class UserDaoJDBCImpl implements UserDao {
     public void deleteUser(int id) {
         try (PreparedStatement statement = connection.prepareStatement("delete from user where id = ?")) {
             statement.setInt(1, id);
+            statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -80,11 +84,13 @@ public class UserDaoJDBCImpl implements UserDao {
     @Override
     public void updateUser(User user) {
         try (PreparedStatement statement = connection.prepareStatement("update user set login = ?, password= ?, " +
-                "country =? where id = ?")) {
+                "country =?, role =? where id = ?")) {
             statement.setString(1, user.getLogin());
             statement.setString(2, user.getPassword());
             statement.setString(3, user.getCountry());
-            statement.setInt(4, user.getId());
+            statement.setString(4, user.getRole());
+            statement.setInt(5, user.getId());
+            statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -122,35 +128,32 @@ public class UserDaoJDBCImpl implements UserDao {
     @Override
     public User getUserByLoginAndPassword(String login, String password) {
         User user = null;
-        try (PreparedStatement statement = connection.prepareStatement("select *" +
+        try (PreparedStatement statement = connection.prepareStatement("select id, country, role" +
                 " from user where login =? and password=?")) {
             statement.setString(1, login);
-            statement.setString(1, password);
+            statement.setString(2, password);
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 int id = rs.getInt("id");
                 String country = rs.getString("country");
-                user = new User(id, login, password, country);
+                String role = rs.getString("role");
+                user = new User(id, login, password, country, role);
             }
         } catch (SQLException e) {
-            printSQLException(e);
+            e.printStackTrace();
         }
         return user;
     }
 
-    private void printSQLException(SQLException ex) {
-        for (Throwable e : ex) {
-            if (e instanceof SQLException) {
-                e.printStackTrace(System.err);
-                System.err.println("SQLState: " + ((SQLException) e).getSQLState());
-                System.err.println("Error Code: " + ((SQLException) e).getErrorCode());
-                System.err.println("Message: " + e.getMessage());
-                Throwable t = ex.getCause();
-                while (t != null) {
-                    System.out.println("Cause: " + t);
-                    t = t.getCause();
-                }
-            }
+    @Override
+    public boolean isLoginExists(String login) {
+        try(PreparedStatement statement = connection.prepareStatement("select id from user where login =?")) {
+            statement.setString(1,login);
+            ResultSet set = statement.executeQuery();
+            return set.next();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+        return false;
     }
 }
