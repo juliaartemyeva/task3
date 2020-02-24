@@ -12,29 +12,9 @@ import java.util.Properties;
 
 public class UserServiceImpl implements UserService {
     private static UserServiceImpl userService = new UserServiceImpl();
-    private UserDao dao = configureDaoFactory().createDAO();
+    private UserDao dao = DaoFactory.getDaoFactory().createDAO();
 
     private UserServiceImpl() {
-    }
-
-    private DaoFactory configureDaoFactory() {
-        DaoFactory factory = null;
-        if (getDaoName().equalsIgnoreCase("Hibernate")) {
-            factory = new HibernateFactory();
-        } else if (getDaoName().equalsIgnoreCase("JDBC")){
-            factory = new JDBCFactory();
-        }
-        return factory;
-    }
-
-    private String getDaoName() {
-        Properties properties = new Properties();
-        try {
-            properties.load(getClass().getClassLoader().getResourceAsStream("config.properties"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return properties.getProperty("dao");
     }
 
     public static UserServiceImpl getInstance() {
