@@ -21,12 +21,12 @@ public class AdminFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse resp = (HttpServletResponse) response;
-        String role = (String) req.getSession().getAttribute("role");
+        HttpSession session = req.getSession();
+        String role = (String) session.getAttribute("role");
         if ("admin".equals(role)) {
             chain.doFilter(req, resp);
         } else {
-            req.getSession().removeAttribute("login");
-            req.getSession().removeAttribute("password");
+            session.invalidate();
             resp.sendRedirect("/");
         }
     }

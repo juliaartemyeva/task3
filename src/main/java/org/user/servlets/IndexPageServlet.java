@@ -44,6 +44,7 @@ public class IndexPageServlet extends HttpServlet {
             session.setAttribute("role", role);
             resp.sendRedirect("/login");
         } else {
+            req.getSession().setAttribute("status", "No user with such login and password was found!");
             doGet(req, resp);
         }
     }

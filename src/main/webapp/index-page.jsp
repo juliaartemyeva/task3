@@ -26,26 +26,32 @@
 
             <form action="/" method="post">
 
-                    <caption>
-                        <h2>
-                                Please sign in to your account
-                        </h2>
+                <caption>
+                    <h2>
+                        Please sign in to your account
+                    </h2>
 
-                    </caption>
+                </caption>
 
-                    <fieldset class="form-group">
-                        <label>User Login</label> <input type="text"
-                                                         value="<c:out value='${user.login}' />" class="form-control"
-                                                         name="login" required="required">
-                    </fieldset>
+                <fieldset class="form-group">
+                    <label>User Login</label> <input type="text"
+                                                     value="<c:out value='${user.login}' />" class="form-control"
+                                                     name="login" required="required">
+                </fieldset>
 
-                    <fieldset class="form-group">
-                        <label>Password</label> <input type="password"
-                                                            value="<c:out value='${user.password}' />" class="form-control"
-                                                            name="password" required="required">
-                    </fieldset>
-                        <button type="submit" class="btn btn-success">Login</button>
+                <fieldset class="form-group">
+                    <label>Password</label> <input type="password"
+                                                   value="<c:out value='${user.password}' />" class="form-control"
+                                                   name="password" required="required">
+                </fieldset>
+                <button type="submit" class="btn btn-success">Login</button>
+                    <c:if test="${status != null}">
+                <h7>
+                   No user with such login and password was found! Please try again!
+                </h7>
+                    </c:if>
             </form>
+
 
         </div>
     </div>
